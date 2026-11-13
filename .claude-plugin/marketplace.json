@@ -1,6 +1,9 @@
 {
   "name": "goat-cinema-strip",
-  "owner": { "name": "GOAT Academy" },
+  "owner": {
+    "name": "GOAT Academy"
+  },
+  "description": "Cinema Strip · Өргөн дэлгэц: wide movie-strip look for Reels/TikTok. Mongolian-first.",
   "plugins": [
     {
       "name": "goat-cinema-strip",
