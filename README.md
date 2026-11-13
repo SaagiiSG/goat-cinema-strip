@@ -35,9 +35,14 @@ Claude өөрөө суулгана. Дараа нь `/reload-plugins` гэж б�
 /plugin install goat-cinema-strip@goat-cinema-strip
 ```
 
+**Zip файлаар авсан бол:**
+1. `goat-cinema-strip.zip`-ийг задална. Задалсан `goat-cinema-strip` хавтсаа устгалгүй үлдээгээрэй.
+2. Claude Code-д "Энэ хавтсан дахь plugin-ийг суулгаад өг:" гэж бичээд задалсан `goat-cinema-strip` хавтсаа чирж оруулна.
+3. `/reload-plugins` гэж бичнэ.
+
 **Шинэ хувилбар гарвал:** Claude-д "goat-cinema-strip plugin-ийг шинэчил" гэж хэлэхэд болно.
 
-> **For Claude Code:** to install this plugin, run `claude plugin marketplace add SaagiiSG/goat-cinema-strip` and then `claude plugin install goat-cinema-strip@goat-cinema-strip`, then tell the user to type `/reload-plugins`. To update it: `claude plugin marketplace update goat-cinema-strip` and then `claude plugin update goat-cinema-strip@goat-cinema-strip`.
+> **For Claude Code:** to install this plugin, run `claude plugin marketplace add SaagiiSG/goat-cinema-strip` (or, from an unzipped copy, `claude plugin marketplace add <path to the goat-cinema-strip folder>`) and then `claude plugin install goat-cinema-strip@goat-cinema-strip`, then tell the user to type `/reload-plugins`. To update it: `claude plugin marketplace update goat-cinema-strip` and then `claude plugin update goat-cinema-strip@goat-cinema-strip`.
 
 ---
 
