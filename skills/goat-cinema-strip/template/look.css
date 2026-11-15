@@ -1,0 +1,21 @@
+@font-face { font-family: "Montserrat"; src: url("fonts/Montserrat%5Bwght%5D.ttf"); font-weight: 100 900; }
+@font-face { font-family: "Cormorant SC"; src: url("fonts/CormorantSC-Medium.ttf"); font-weight: 500; }
+
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+
+/* preview .strip: full width, centred on y 734 (top and height from PLAN.strip). The footage is 6% bigger and
+   pushes in from the centre. */
+#strip { position: absolute; left: 0; width: 1080px; overflow: hidden; background: #000; }
+#push { position: absolute; transform-origin: 50% 50%; }
+#clip { display: block; width: 100%; height: 100%; }
+.black { position: absolute; inset: 0; background: #000; opacity: 0; }
+
+/* preview .t: Montserrat 300, letter-spacing .32em, #EDE6DA (54 px there, up to 64 here, v1's size);
+   .d: Montserrat 600, letter-spacing .28em, #9A8F80 (30 px there, up to 40 here so a phone number reads on a
+   phone). Centred on x 540; padding-left balances the spacing CSS adds after the last letter. */
+#texts > div { position: absolute; left: 540px; top: 0; white-space: nowrap; text-align: center; opacity: 0; }
+.title { font: 300 64px/1 "Montserrat", sans-serif; letter-spacing: 0.32em; padding-left: 0.32em; color: #EDE6DA; text-transform: uppercase; }
+/* v1's serif option: Cormorant SC, 0.12 em spacing, lower case drawn as small capitals */
+.title.serif { font: 500 80px/1 "Cormorant SC", serif; letter-spacing: 0.12em; padding-left: 0.12em; text-transform: none; }
+.line { font: 600 40px/1.5 "Montserrat", sans-serif; letter-spacing: 0.28em; padding-left: 0.28em; color: #9A8F80; text-transform: uppercase; }

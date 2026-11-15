@@ -1,7 +1,7 @@
 {
   "name": "goat-cinema-strip",
-  "version": "1.0.0",
-  "description": "Cinema Strip · Өргөн дэлгэц: turns phone clips into a wide movie strip across a black screen, with a teal-orange film grade, slow push-ins and wide-spaced Mongolian titles. Renders a 1080x1920 MP4 for Reels/TikTok.",
+  "version": "2.0.0",
+  "description": "Cinema Strip · Өргөн дэлгэц: turns phone clips into a wide movie strip across a black screen, with a teal-orange film grade, slow push-ins, dips through black and wide-spaced Mongolian titles, built on HyperFrames. Renders a 1080x1920 MP4 for Reels/TikTok.",
   "author": {
     "name": "GOAT Academy"
   },
@@ -13,7 +13,8 @@
     "cinematic",
     "letterbox",
     "mongolian",
-    "ffmpeg"
+    "ffmpeg",
+    "hyperframes"
   ],
   "license": "MIT",
   "repository": "https://github.com/SaagiiSG/goat-cinema-strip"
