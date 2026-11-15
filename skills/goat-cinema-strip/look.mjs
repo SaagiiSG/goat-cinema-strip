@@ -2,6 +2,7 @@
 // teal-and-orange (or noir, bleach, estate) with a vignette and fine grain baked in by ffmpeg. Every shot pushes
 // in 6%, cuts are hard or dip through black, the strip fades up at the start and everything fades to black at
 // the end. A wide-spaced Montserrat Light (or Cormorant SC) title sits in the black above, a line below.
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { missing } from "./scripts/fonts.mjs";
@@ -61,9 +62,13 @@ export function strip(look = {}) {
 }
 export const FIT = (plan) => strip(plan.look).fit;
 
-// Per clip, after the crop to FIT: the grade, a vignette and fine moving grain (v1).
+// Per clip, after the crop to FIT: the grade, a vignette and fine moving grain (v1). It runs in prep, which bakes
+// the grade into the footage, so it records the grade in the work folder (goat.mjs's .work-<NAME>) for prepare to check.
 export async function clipFilter(clip, ctx) {
-  return `${GRADES[grade(ctx.plan.look)]},vignette=PI/5,noise=alls=8:allf=t`;
+  const g = grade(ctx.plan.look), work = join(ctx.planDir, `.work-${NAME}`);
+  mkdirSync(work, { recursive: true });
+  writeFileSync(join(work, "grade.txt"), g);
+  return `${GRADES[g]},vignette=PI/5,noise=alls=8:allf=t`;
 }
 
 export function validate(plan) {
@@ -161,6 +166,10 @@ export async function prepare(ctx) {
   if (w !== s.fit[0] || h !== s.fit[1]) // the template would stretch it into the new strip
     throw new Error(`the clips were prepared for another strip (${w}x${h}; ratio ${ctx.plan.look?.ratio ?? "2.39"} needs ` +
       `${s.fit.join("x")}): run "prep" again`);
+  const stamp = join(ctx.work, "grade.txt"), was = existsSync(stamp) ? readFileSync(stamp, "utf8") : null;
+  if (was !== grade(ctx.plan.look)) // the grade is baked in at prep
+    throw new Error(was ? `the footage was graded "${was}" but the plan now says "${grade(ctx.plan.look)}": run "prep" again`
+      : `the footage's grade wasn't recorded (prepared by an older version): run "prep" again`);
   const { items, dips } = schedule(ctx.plan, ctx.dur, ctx.cuts);
   return { strip: s, pushes: pushes(ctx.cuts.length ? ctx.cuts : [0], ctx.dur), dips, items,
     serif: ctx.plan.look?.title_font === "serif", T };

@@ -56,7 +56,7 @@ Write `plan.json` in the project folder (paths are relative to it):
 **clips** play in order. `in`/`out` trim a video (seconds); `dur` sets how long a photo shows. `cx`/`cy` (0–1, default 0.5) choose which part of the frame the strip keeps: for an upright clip, `cy` is roughly how far down the frame the band sits (`cy: 0.3` keeps the upper part, `cy: 0.7` the lower part); for a landscape clip only a thin top and bottom are cut, so it barely matters. Add `"sound": false` to mute one clip.
 
 Then run these in order. Each one says what to run first if a step is missing.
-1. `goat prep plan.json`: crops every clip to the strip (6% bigger, for the push), grades it (the `grade` below, a vignette and fine grain) and joins them into `.work-cinema-strip/main.mp4`. **Run it again whenever `clips`, `grade` or `ratio` change** (render refuses footage prepared for another ratio).
+1. `goat prep plan.json`: crops every clip to the strip (6% bigger, for the push), grades it (the `grade` below, a vignette and fine grain) and joins them into `.work-cinema-strip/main.mp4`. **Run it again whenever `clips`, `grade` or `ratio` change** (render refuses footage prepared for another grade or ratio).
 2. `goat cut plan.json`: this look never cuts pauses; the step only readies the video (`.work-cinema-strip/cut.mp4`) and takes a second.
 
 **Check the framing** before writing the words, above all on upright clips. For each shot, pull one frame from inside it, 0.4 s after it starts (never at a cut: that frame may already be the next shot). A shot starts where the shots before it end; for the second shot above (2.6 to 5.2 s):
