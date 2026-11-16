@@ -14,6 +14,8 @@ Talk to the user in the language they write in (usually Mongolian). Keep message
 
 ## 1. Setup check (first time on a machine)
 
+**Every new video, first:** run `claude plugin marketplace update goat-cinema-strip`, then `claude plugin update goat-cinema-strip@goat-cinema-strip`. If it installs a new version, tell the user a new version was installed and ask them to type `/reload-plugins` before you go on. If either command fails (offline, or installed from a zip), carry on and don't mention it.
+
 Run `node --version` (needs 22 or newer) and `ffmpeg -version`. If either is missing, show the install command and ask before installing (it is their computer):
 - Mac: `brew install node ffmpeg`
 - Windows: `winget install OpenJS.NodeJS.LTS` and `winget install Gyan.FFmpeg`, then close and reopen the terminal.
@@ -28,7 +30,7 @@ This look has no captions, so it needs no speech model. The first render downloa
 
 Make `raw/` and `output/` in the current folder. Ask for:
 1. **The clips.** Drag them into the chat or copy them into `raw/`. Slow, steady, wide shots work best, 2–3 s each. **Filmed sideways (landscape) is best:** the whole picture fits the strip. An upright phone clip shows only a band about a quarter of its height (you choose which band, see `cy` below). Photos work too (they hold still while the push moves in).
-2. **The words:** a short title (2–3 words, e.g. "ШИНЭ ҮЙЛЧИЛГЭЭ") and one line (date, place, phone or price, e.g. "ЭНЭ НАМАР · 9911-2233"). Never invent a price, phone number or date. Ask.
+2. **The words:** a short title (2–3 words, e.g. "ШИНЭ ҮЙЛЧИЛГЭЭ") and one line (the date, place, phone or price the user gave, e.g. "ЭНЭ НАМАР · ЗАЙСАН"). Never invent a price, phone number or date. Ask.
 
 Then run `goat probe raw/*`. It prints each file's size, length, whether it has sound, whether it is HDR, and `speech` spans (when someone is talking). Use these to pick shots.
 
@@ -46,7 +48,7 @@ Write `plan.json` in the project folder (paths are relative to it):
   ],
   "texts": [
     {"role": "title", "text": "ШИНЭ ҮЙЛЧИЛГЭЭ", "start": 0, "end": 4.2},
-    {"role": "line", "text": "ЭНЭ НАМАР · 9911-2233", "start": 0.8}
+    {"role": "line", "text": "ЭНЭ НАМАР · ЗАЙСАН", "start": 0.8}
   ],
   "music": {"src": "raw/song.mp3", "volume": 0.25},
   "look": {"grade": "teal-orange", "ratio": "2.39", "cuts": "dip", "title_font": "sans"}
@@ -67,7 +69,7 @@ Read it. The strip shows all of it as the shot starts; by its end the push has m
 
 **texts** (only one title and one line show at a time: a later one ends the one before):
 - `title`: wide-spaced capitals in the black above the strip, Montserrat Light, warm white, up to 64 px (or Cormorant SC up to 80 px, see `title_font`). **One row, at most 16 characters** (spaces count): 2 or 3 words. A longer title, or one with `\n`, is refused with a message: shorten it. A long row shrinks to fit the 840 px safe width: "ШИНЭ ЗАГВАР" stays at 64 px, "ШИНЭ ҮЙЛЧИЛГЭЭ" comes out at about 56 px, a full 16-character row at about 49 px (down to 34 px for a row of the widest letters, Щ Ш Ю).
-- `line`: smaller bold spaced capitals below the strip, Montserrat SemiBold, warm grey, up to 40 px. For the date, place, phone or price. **At most 22 characters a row** (spaces count); split a longer one into 2 rows with `\n` (2 at most). "ЭНЭ НАМАР · 9911-2233" fits at the full 40 px; a row of the widest letters goes down to 26 px.
+- `line`: smaller bold spaced capitals below the strip, Montserrat SemiBold, warm grey, up to 40 px. For the date, place, phone or price. **At most 22 characters a row** (spaces count); split a longer one into 2 rows with `\n` (2 at most). "ЭНЭ НАМАР · ЗАЙСАН" fits at the full 40 px; a row of the widest letters goes down to 26 px.
 
 Both are drawn in capitals whatever case you write (a `serif` title keeps your case: lower-case letters come out as small capitals). Each fades in over 0.8 s from its `start` and out over 0.5 s before its `end` (default: the next one's start, or the end of the video). One that ends in the last 0.8 s stays up and fades out with the screen. **Each needs 2 s on screen at least**; a shorter one is refused with a message.
 
@@ -123,6 +125,7 @@ Tell the user where the file is (`output/cinema-strip.mp4`) and that it is ready
 
 ## Rules
 
+- Every word and graphic on screen comes from what this video says or shows, or from what the user gave you. The examples in this file are only examples: never put them in a video. If the user hasn't given the words, ask.
 - Anything the viewer must read (price, phone, offer) goes in `line`, which sits inside the area no app buttons cover. Never put it anywhere else.
 - Use only the fonts bundled in `SKILL_DIR/fonts` (Montserrat and Cormorant SC have Ө ө Ү ү and ₮). Don't swap in other fonts. Emoji and symbols such as ★ can't be drawn.
 - Keep titles short. Two or three words read better than a sentence.
